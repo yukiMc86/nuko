@@ -15,3 +15,29 @@ spring:
     import:
       - nacos:service-order-common.properties?group=order
       - nacos:service-order-database.properties?group=order
+
+logging:
+  level:
+    com.relsola.order.feign: debug
+
+---
+spring:
+  cloud:
+    openfeign:
+      client:
+        config:
+          default:
+            logger-level: full
+            # 连接超时
+            connect-timeout: 1000
+            # 读取超时
+            read-timeout: 2000
+          service-product:
+            logger-level: full
+            connect-timeout: 3000
+            read-timeout: 5
+#            retryer: feign.retryer.Default
+
+feign:
+  sentinel:
+    enabled: true

@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import com.relsola.order.bean.Order;
+import com.relsola.order.feign.ProductFeignClient;
 import com.relsola.order.service.OrderService;
 import com.relsola.product.bean.Product;
 import lombok.extern.slf4j.Slf4j;
@@ -27,9 +28,14 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     RestTemplate restTemplate;
 
+    @Autowired
+    ProductFeignClient productFeignClient;
+
     @Override
     public Order createOrder(Long userId, Long productId) {
-        Product product = getProductFromRemote(productId);
+//        Product product = getProductFromRemote(productId);
+
+        Product product = productFeignClient.getProductById(productId);
 
         Order order = new Order();
         order.setId(1L);
